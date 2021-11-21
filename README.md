@@ -1,4 +1,3 @@
 # warbler
 
-Twitter clone
-Project for Springboard curriculum
+Twitter clone project for Springboard curriculum

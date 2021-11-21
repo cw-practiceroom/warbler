@@ -19,9 +19,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret")
 toolbar = DebugToolbarExtension(app)
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS']=False
 
 connect_db(app)
 
@@ -66,6 +65,8 @@ def signup():
     and re-present form.
     """
 
+    if CURR_USER_KEY in session:
+        del session[CURR_USER_KEY]
     form = UserAddForm()
 
     if form.validate_on_submit():
@@ -115,7 +116,7 @@ def logout():
     """Handle logout of user."""
 
     do_logout()
-    flash('Successfully logged out')
+    flash('Successfully logged out', 'success')
 
     return redirect('/login')
 
@@ -232,7 +233,8 @@ def add_like(msg_id):
 
     liked_message = Message.query.get_or_404(msg_id)
     if liked_message.user_id == g.user.id:
-        return abort(403)
+        return abort(403) 
+        # TODO:
 
     user_likes = g.user.likes
 
@@ -271,6 +273,7 @@ def profile():
         flash('Wrong password, please try again.', 'danger')
 
     return render_template('users/edit.html', form=form, user_id=user.id)
+
 
 @app.route('/users/delete', methods=["POST"])
 def delete_user():
@@ -330,7 +333,11 @@ def messages_destroy(message_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    msg = Message.query.get(message_id)
+    msg = Message.query.get_or_404(message_id)
+    if msg.user_id != g.user.id:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
     db.session.delete(msg)
     db.session.commit()
 
@@ -367,11 +374,14 @@ def homepage():
         return render_template('home-anon.html')
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    """404 NOT FOUND page."""
+
+    return render_template('404.html'), 404
+
 ##############################################################################
 # Turn off all caching in Flask
-#   (useful for dev; in production, this kind of stuff is typically
-#   handled elsewhere)
-#
 # https://stackoverflow.com/questions/34066804/disabling-caching-in-flask
 
 @app.after_request
