@@ -234,7 +234,6 @@ def add_like(msg_id):
     liked_message = Message.query.get_or_404(msg_id)
     if liked_message.user_id == g.user.id:
         return abort(403) 
-        # TODO:
 
     user_likes = g.user.likes
 
