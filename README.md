@@ -15,6 +15,5 @@ To get this application running:
 
 If seed.py is run, login with the following demo user credentials:
 
-  username: "demo-user"
-
-  password: "password"
+- username: "demo-user"
+- password: "password"
