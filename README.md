@@ -1,6 +1,6 @@
 # warbler
 
-Twitter clone project.
+Twitter clone project. Built with Python, Flask, SQLAlchemy (PostgreSQL). Styling with Bootstrap.
 
 #### To get this application running:
 1. <code>git clone https://github.com/cwaymeyer/database-dj.git</code>
