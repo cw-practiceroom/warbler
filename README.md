@@ -1,6 +1,6 @@
 # warbler
 
-Twitter clone project (originally for Springboard SE curriculum).
+Twitter clone project.
 
 To get this application running:
 
