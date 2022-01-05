@@ -2,8 +2,7 @@
 
 Twitter clone project.
 
-To get this application running:
-
+#### To get this application running:
 1. <code>git clone https://github.com/cwaymeyer/database-dj.git</code>
 2. <code>cd warbler</code>
 3. <code>python3 -m venv venv</code>
@@ -13,7 +12,6 @@ To get this application running:
 7. <code>python seed.py</code> (to generate fake data)
 8. <code>flask run</code>
 
-If seed.py is run, login with the following demo user credentials:
-
+#### If seed.py is run, login with the following demo user credentials:
 - username: "demo-user"
 - password: "password"
